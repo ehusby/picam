@@ -81,7 +81,7 @@ def capture_photos(interval_sec, output_directory):
             time.sleep(interval_sec)
 
     except KeyboardInterrupt:
-        print("\nExiting timelapse capture script")
+        print("\nDetected KeyboardInterrupt for timelapse capture script")
 
 
 def main():
@@ -110,4 +110,6 @@ def main():
 
 
 if __name__ == "__main__":
+    print("Starting timelapse capture script")
     main()
+    print("Exiting timelapse capture script")
