@@ -103,6 +103,7 @@ def main():
     )
     args = parser.parse_args()
 
+    args.output_directory = os.path.expanduser(args.output_directory)
     if not os.path.isdir(args.output_directory):
         parser.error(f"Output directory does not exist: {args.output_directory}")
 
