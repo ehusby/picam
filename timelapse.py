@@ -99,7 +99,7 @@ def main():
     parser.add_argument(
         "-t", "--interval",
         type=int,
-        default=60,
+        default=30,
         help="Time interval between photo captures in seconds",
     )
     parser.add_argument(
