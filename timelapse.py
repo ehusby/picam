@@ -40,10 +40,10 @@ def save_video(vid_date, output_directory):
             proc = subprocess.run(cmd, shell=True)
             success = (success or success is None) and proc.returncode == 0
 
-            upload_tile = run["upload_tile"]
-            if upload_tile is not None and proc.returncode == 0:
-                print(f"Uploading to YouTube with video title '{upload_tile}': {out_path}")
-                proc = subprocess.run(f""" youtube-upload --title="{upload_tile}" --playlist="Ubud Sawah Timelapses" "{out_path}" """, shell=True)
+            upload_title = run["upload_title"]
+            if upload_title is not None and proc.returncode == 0:
+                print(f"Uploading to YouTube with video title '{upload_title}': {out_path}")
+                proc = subprocess.run(f""" youtube-upload --title="{upload_title}" --playlist="Ubud Sawah Timelapses" "{out_path}" """, shell=True, timeout=600)
 
     if success and all(os.path.isfile(f) for f in [run["out_path"] for run in run_list]):
         print(f"Deleting daily image files: {input_path_pattern}")
