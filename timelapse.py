@@ -56,6 +56,7 @@ def save_video(vid_date, output_directory):
 def capture_photos(interval_sec, output_directory):
     camera = PiCamera()
     camera.shutter_speed = 1500
+    camera.resolution = (2592, 1944)
 
     ended_day = None
 
