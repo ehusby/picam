@@ -15,12 +15,12 @@ def save_video(vid_date, output_directory):
     run_list = [
         {
             "out_path": f"{output_directory}/{vid_date.strftime('VID_%Y%m%d.mp4')}",
-            "cmd": """ ffmpeg -framerate 30 -pattern_type glob -i '{in_path}' -c:v libx264 -preset ultrafast -pix_fmt yuv420p '{out_path}' """,
+            "cmd": """ ffmpeg -loglevel error -framerate 30 -pattern_type glob -i '{in_path}' -c:v libx264 -preset ultrafast -pix_fmt yuv420p '{out_path}' """,
             "upload_title": None,
         },
         {
             "out_path": f"{output_directory}/{vid_date.strftime('VID_%Y%m%d_TS.mp4')}",
-            "cmd": """ ffmpeg -framerate 30 -pattern_type glob -i '{in_path}' -c:v libx264 -preset ultrafast -pix_fmt yuv420p -vf "drawtext=fontfile=/Library/Fonts/Arial\ Unicode.ttf: fontsize=30: fontcolor=white: text='%{{metadata\:DateTime\:def_value}}': x=(w-tw)/2: y=h-(2*lh)" '{out_path}' """,
+            "cmd": """ ffmpeg -loglevel error -framerate 30 -pattern_type glob -i '{in_path}' -c:v libx264 -preset ultrafast -pix_fmt yuv420p -vf "drawtext=fontfile=/Library/Fonts/Arial\ Unicode.ttf: fontsize=30: fontcolor=white: text='%{{metadata\:DateTime\:def_value}}': x=(w-tw)/2: y=h-(2*lh)" '{out_path}' """,
             "upload_title": vid_date.strftime('%Y-%m-%d %A'),
         },
     ]
@@ -43,7 +43,7 @@ def save_video(vid_date, output_directory):
             upload_title = run["upload_title"]
             if upload_title is not None and proc.returncode == 0:
                 print(f"Uploading to YouTube with video title '{upload_title}': {out_path}")
-                proc = subprocess.run(f""" youtube-upload --title="{upload_title}" --playlist="Ubud Sawah Timelapses" "{out_path}" """, shell=True, timeout=600)
+                proc = subprocess.run(f""" youtube-upload --privacy="unlisted" --title="{upload_title}" --playlist="Ubud Sawah Timelapses" "{out_path}" """, shell=True, timeout=600)
 
     if success and all(os.path.isfile(f) for f in [run["out_path"] for run in run_list]):
         print(f"Deleting daily image files: {input_path_pattern}")
